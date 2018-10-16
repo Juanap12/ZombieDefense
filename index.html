@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Basic Three.js App</title>
+    <title>Zombie Defense App</title>
     <style>
         html,
         body {
@@ -29,9 +29,13 @@
 
         let jugador1 = new Jugador()
 
+        addEventListener("click", function(){
+            jugador1.disparar()
+        })
+
         var render = function () {
             requestAnimationFrame(render);
-            
+
             //jugador1.disparar()
             jugador1.actualizar()
 

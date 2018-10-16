@@ -1,10 +1,13 @@
 class Jugador {
     constructor() {
-        this.balas = new Array()
-        let bala = new Bala(Math.random())
-        this.balas.push(bala)
-        let geometry = new THREE.BoxGeometry( 1, 1, 1)
-        let material = new THREE.MeshNormalMaterial()
+        this.balas = []
+
+        let radio = 1;
+        let segmentosAnchura = 32;
+        let segmentosAltura = 32;
+
+        let geometry = new THREE.SphereGeometry( radio, segmentosAnchura, segmentosAltura)
+        var material = new THREE.MeshBasicMaterial( {color: 0xffff00} )
         this.objeto = new THREE.Mesh( geometry, material)
         scene.add(this.objeto);
         
@@ -18,7 +21,8 @@ class Jugador {
     }
 
     disparar() {
-        let bala = new Bala(Math.random())
+        let angulo = Math.floor(Math.random() * 360)
+        let bala = new Bala(angulo)
         
         this.balas.push(bala)
     }
