@@ -17,6 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/97/three.min.js"></script>
     <script src="bala.js"></script>
     <script src="jugador.js"></script>
+    <script src="escenario.js"></script>
     <script>
         var scene = new THREE.Scene();
         var aspect = window.innerWidth / window.innerHeight;
@@ -24,6 +25,13 @@
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
+
+        console.log( generarMatrizEscenario(32,18,[{
+            'width': 3,
+            'height' : 2,
+            'frequency' : 2,
+            'id' : 3,
+        }]) );
 
         camera.position.z = 5;
 
