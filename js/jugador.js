@@ -7,9 +7,18 @@ class Jugador {
         let segmentosAltura = 32;
 
         let geometry = new THREE.SphereGeometry( radio, segmentosAnchura, segmentosAltura)
-        var material = new THREE.MeshBasicMaterial( {color: 0xffff00} )
+        let texture = loader.load("textures/jugador.png")
+        //let material = new THREE.MeshBasicMaterial( {color: 0xffff00} )
+        let material = new THREE.MeshPhongMaterial({
+            color: 0xaaaaaa,
+            specular: 0x333333,
+            shininess: 15,
+            map: texture
+          });
         this.objeto = new THREE.Mesh( geometry, material)
         scene.add(this.objeto);
+
+        this.objeto.rotation.y += 6;
         
         //window.addEventListener("click", jugador1.disparar )
     }
