@@ -5,10 +5,13 @@
 
 	sceneObjs - lista de objetos, con atributos height (alto), width (ancho), frequency (frecuencia), id
 **/
+
+var EMPTY  = 0;
+var STREET = 1;
+
 function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
 
-	var EMPTY  = 0;
-	var STREET = 1;
+	
 
 
     var m = []
@@ -19,30 +22,37 @@ function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
     }
 
     // MAIN STREET
-    for (var i = 0; i < HEIGHT; i++) {
+    /*for (var i = 0; i < HEIGHT; i++) {
       m[i][Math.floor(WIDTH/2)] = STREET;
+    }*/
+    for (var i = 0; i < WIDTH; i++) {
+        m[Math.floor(HEIGHT/2)][i] = STREET;
     }
 
     // LEFT STREETS
     var STREETS_PER_SIDE = 2;
-    for (var i = 0; i < HEIGHT; i++) {
-      var build = ( (Math.random()*HEIGHT)<STREETS_PER_SIDE );
+    for (var i = 0; i < WIDTH; i++) {
+      var build = ( (Math.random()*WIDTH)<STREETS_PER_SIDE );
       if (build) {
-        for (var j = 0; m[i][j] != 1; j++) {
-          m[i][j] = STREET;
+        for (var j = 0; m[j][i] != 1; j++) {
+          m[j][i] = STREET;
         }
+        i++;
       }
     }
 
+
     // RIGHT STREETS
-    for (var i = 0; i < HEIGHT; i++) {
-      var build = ( (Math.random()*HEIGHT)<STREETS_PER_SIDE );
+    for (var i = 0; i < WIDTH; i++) {
+      var build = ( (Math.random()*WIDTH)<STREETS_PER_SIDE );
       if (build) {
-        for (var j = WIDTH - 1; m[i][j] != 1; j--) {
-          m[i][j] = STREET;
+        for (var j = HEIGHT - 1; m[j][i] != 1; j--) {
+          m[j][i] = STREET;
         }
+        i++;
       }
     }
+
 
     function checkEmptySpots(m,w,h) {
     	let empty_spots = [];
@@ -92,7 +102,48 @@ function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
     return m;
 }
 
-
 function imprimirMatriz() {
     for (var i = 0; i < m.length; i ++) console.log(m[i]);
 }
+
+var street_texture = (new THREE.TextureLoader()).load('/textures/street.png');
+
+function crearEscenario() {
+
+    var WIDTH = 31;
+    var HEIGHT = 15;
+
+    var matrix = generarMatrizEscenario(WIDTH,HEIGHT,[{
+            'width': 3,
+            'height' : 2,
+            'frequency' : 3,
+            'id' : 3,
+        }]);
+    var x0 = -Math.floor(WIDTH/2);
+    var y0 = -Math.floor(HEIGHT/2);
+
+    for (var j = 0; j < HEIGHT; j++)
+    for (var i = 0; i < WIDTH; i ++) {
+        var geometry = new THREE.PlaneGeometry( 1, 1 );
+        var material;
+        var plane;
+        switch (matrix[j][i]) {
+            case STREET:
+                material = new THREE.MeshBasicMaterial( {map: street_texture, side: THREE.DoubleSide} );
+                plane = new THREE.Mesh( geometry, material );
+                if (j != Math.floor(HEIGHT/2)) plane.rotation.z += Math.PI/2;
+                break;
+            case EMPTY:
+                material = new THREE.MeshBasicMaterial( {color:0x00ff00, side: THREE.DoubleSide} );
+                plane = new THREE.Mesh( geometry, material );
+                break
+            default:
+                material = new THREE.MeshBasicMaterial( {color:  0xff0000, side: THREE.DoubleSide} );
+                plane = new THREE.Mesh( geometry, material );
+        }
+        plane.position.x = i + x0;
+        plane.position.y = j + y0;
+        scene.add( plane );
+    }
+}
+
