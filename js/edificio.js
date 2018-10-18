@@ -2,6 +2,8 @@ class Edificio {
     constructor(x, y) {
         let width = 3
         let height = 2
+        this.width = width;
+        this.height = height;
         let depth = 1
         let geometry = new THREE.BoxGeometry(width, height, depth)
         let texture = loader.load("textures/techo_edificio.png")
@@ -14,8 +16,8 @@ class Edificio {
         this.objeto = new THREE.Mesh(geometry, material)
         scene.add(this.objeto)
 
-        this.objeto.position.x = x;
-        this.objeto.position.y = y;
+        this.objeto.position.x = x + width/2;
+        this.objeto.position.y = y + height/2;
     }
 
     actualizar() {

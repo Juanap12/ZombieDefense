@@ -1,8 +1,10 @@
 class Casa {
-    constructor() {
+    constructor(x,y) {
         let width = 1
         let height = 1
         let depth = 1
+        this.width = width;
+        this.height = height;
         let geometry = new THREE.BoxGeometry(width, height, depth)
         let texture = loader.load("textures/techo_casa.png")
         let material = new THREE.MeshPhongMaterial({
@@ -14,7 +16,8 @@ class Casa {
         this.objeto = new THREE.Mesh(geometry, material)
         scene.add(this.objeto)
 
-        this.objeto.position.x += 6;
+        this.objeto.position.x = x + width/2;
+        this.objeto.position.y = y + height/2;
     }
 
     actualizar() {
