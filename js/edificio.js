@@ -1,5 +1,5 @@
 class Edificio {
-    constructor() {
+    constructor(x, y) {
         let width = 3
         let height = 2
         let depth = 1
@@ -14,7 +14,8 @@ class Edificio {
         this.objeto = new THREE.Mesh(geometry, material)
         scene.add(this.objeto)
 
-        this.objeto.position.x += 4;
+        this.objeto.position.x = x;
+        this.objeto.position.y = y;
     }
 
     actualizar() {

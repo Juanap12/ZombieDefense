@@ -132,18 +132,22 @@ function crearEscenario() {
                 material = new THREE.MeshBasicMaterial( {map: street_texture, side: THREE.DoubleSide} );
                 plane = new THREE.Mesh( geometry, material );
                 if (j != Math.floor(HEIGHT/2)) plane.rotation.z += Math.PI/2;
+                plane.position.x = i + x0;
+                plane.position.y = j + y0;
+                scene.add( plane );
                 break;
             case EMPTY:
                 material = new THREE.MeshBasicMaterial( {color:0x00ff00, side: THREE.DoubleSide} );
                 plane = new THREE.Mesh( geometry, material );
+                plane.position.x = i + x0;
+                plane.position.y = j + y0;
+                scene.add( plane );
                 break
             default:
-                material = new THREE.MeshBasicMaterial( {color:  0xff0000, side: THREE.DoubleSide} );
-                plane = new THREE.Mesh( geometry, material );
+                //material = new THREE.MeshBasicMaterial( {color:  0xff0000, side: THREE.DoubleSide} );
+                //plane = new THREE.Mesh( geometry, material );
+                new Edificio(i + x0, j + y0)
         }
-        plane.position.x = i + x0;
-        plane.position.y = j + y0;
-        scene.add( plane );
     }
 }
 
