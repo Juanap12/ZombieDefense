@@ -8,6 +8,7 @@ class Jugador {
 
         let geometry = new THREE.SphereGeometry( radio, segmentosAnchura, segmentosAltura)
         let texture = loader.load("textures/jugador.png")
+        texture.offset.x = 0.25; // 0.0 - 1.0
         //let material = new THREE.MeshBasicMaterial( {color: 0xffff00} )
         let material = new THREE.MeshPhongMaterial({
             color: 0xaaaaaa,
@@ -17,8 +18,6 @@ class Jugador {
           });
         this.objeto = new THREE.Mesh( geometry, material)
         scene.add(this.objeto);
-
-        this.objeto.rotation.y += 6;
         
         //window.addEventListener("click", jugador1.disparar )
     }
