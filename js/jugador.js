@@ -2,13 +2,13 @@ class Jugador {
     constructor() {
         this.balas = []
 
-        let radio = 1
-        let segmentosAnchura = 30
-        let segmentosAltura = 30
+        let radioSuperior = 1
+        let radioInferior = 1
+        let altura = 1
+        let segmentosRadiales = 30
 
-        let geometry = new THREE.SphereGeometry( radio, segmentosAnchura, segmentosAltura)
+        let geometry = new THREE.CylinderGeometry( radioSuperior, radioInferior, altura, segmentosRadiales)
         let texture = loader.load("textures/jugador.png")
-        texture.offset.x = 0.25 // 0.0 - 1.0
         let material = new THREE.MeshPhongMaterial({
             color: 0xaaaaaa,
             specular: 0x333333,
@@ -17,6 +17,8 @@ class Jugador {
           });
         this.objeto = new THREE.Mesh( geometry, material)
         scene.add(this.objeto)
+
+        this.objeto.rotation.x += Math.PI/2;
     }
 
     actualizar() {
