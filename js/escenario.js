@@ -24,9 +24,6 @@ function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
     }
 
     // MAIN STREET
-    /*for (var i = 0; i < HEIGHT; i++) {
-      m[i][Math.floor(WIDTH/2)] = STREET;
-    }*/
     for (var i = 0; i < WIDTH; i++) {
         m[Math.floor(HEIGHT/2)][i] = STREET;
     }
@@ -132,13 +129,15 @@ function crearEscenario() {
         }
     ];
 
-    var objects_constructor = {
-        4 : Edificio,
-        3 : Casa,
-    }
+    var objects_ids = [HOUSE,BUILDING];
+    var constructors =[Casa ,Edificio];
+
+    var objects_constructor = {};
+    for (var i = 0; i < objects_ids.length; i++)
+        objects_constructor[objects_ids[i]] = constructors[i];
 
     var matrix = generarMatrizEscenario(WIDTH,HEIGHT,objects);
-    imprimirMatriz(matrix)
+    //imprimirMatriz(matrix)
     var x0 = -Math.floor(WIDTH/2);
     var y0 = -Math.floor(HEIGHT/2);
 
