@@ -21,8 +21,8 @@ class Jugador {
     }
 
     disparar() {
-        let angulo = Math.floor(Math.random() * 360)
-        let bala = new Bala(angulo)
+        let angulo = Math.floor(Math.random() * Math.PI);
+        let bala = new Bala(angulo,this.objeto.position);
         
         this.balas.push(bala)
     }
