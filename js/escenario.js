@@ -11,9 +11,10 @@ var GRASS  = 1
 var STREET = 2;
 var HOUSE  = 3;
 var BUILDING = 4;
+var PLAYER = 5;
 
 var street_texture = (new THREE.TextureLoader()).load('textures/street.png');
-var grass_texture = (new THREE.TextureLoader()).load('textures/grass.jpg')
+var grass_texture = (new THREE.TextureLoader()).load('textures/grass.jpg');
 
 function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
 	
@@ -26,15 +27,23 @@ function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
         m[i].push(EMPTY);
     }
 
+    let midRow = Math.floor(HEIGHT/2);
+
+    // Player 1
+    m[midRow + 1][0] = 5;
+
+    // Player 2
+    m[midRow - 1][0] = 5;
+
     // MAIN STREET
     for (var i = 0; i < WIDTH; i++) {
         m[Math.floor(HEIGHT/2)][i] = STREET;
     }
 
 
-    // LEFT STREETS
+    // UPPER STREETS
     var STREETS_PER_SIDE = 2;
-    for (var i = 0; i < WIDTH; i++) {
+    for (var i = 2; i < (WIDTH - 2); i++) {
       var build = ( (Math.random()*WIDTH)<STREETS_PER_SIDE );
       if (build) {
         for (var j = 0; m[j][i] != STREET; j++) {
@@ -44,8 +53,8 @@ function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
       }
     }
 
-    // RIGHT STREETS
-    for (var i = 0; i < WIDTH; i++) {
+    // LOW STREETS
+    for (var i = 2; i < (WIDTH - 2); i++) {
       var build = ( (Math.random()*WIDTH)<STREETS_PER_SIDE );
       if (build) {
         for (var j = HEIGHT - 1; m[j][i] != STREET; j--) {
@@ -128,18 +137,18 @@ function crearEscenario() {
         {
             'width': 1,
             'height' : 1,
-            'frequency' : 10,
+            'frequency' : 6,
             'id' : HOUSE,
         },{
             'width': 3,
             'height' : 2,
-            'frequency' : 2,
+            'frequency' : 3,
             'id' : BUILDING,
         }
     ];
 
-    var objects_ids = [HOUSE,BUILDING];
-    var constructors =[Casa ,Edificio];
+    var objects_ids = [HOUSE,BUILDING,PLAYER];
+    var constructors =[Casa ,Edificio, Jugador];
 
     var objects_constructor = {};
     for (var i = 0; i < objects_ids.length; i++)
@@ -174,10 +183,18 @@ function crearEscenario() {
             case EMPTY:
                 break;
             default:
-                //material = new THREE.MeshBasicMaterial( {color:  0xff0000, side: THREE.DoubleSide} );
-                //plane = new THREE.Mesh( geometry, material );
                 var constructor = objects_constructor[matrix[j][i]];
                 var obj = new constructor(i + x0 - 0.5, j + y0 - 0.5);
+
+                if(matrix[j][i] == PLAYER){
+                    material = new THREE.MeshBasicMaterial( {map: grass_texture, side: THREE.DoubleSide} );
+                    plane = new THREE.Mesh( geometry, material );
+                    plane.position.x = i + x0;
+                    plane.position.y = j + y0;
+                    scene.add( plane );
+
+                    jugadores.push(obj)
+                }
 
                 var w = obj.width;
                 var h = obj.height;

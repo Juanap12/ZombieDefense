@@ -1,9 +1,9 @@
 class Jugador {
-    constructor() {
+    constructor(x, y) {
         this.balas = []
 
-        let radioSuperior = 1
-        let radioInferior = 1
+        let radioSuperior = 0.5
+        let radioInferior = 0.5
         let altura = 1
         let segmentosRadiales = 60
 
@@ -17,6 +17,9 @@ class Jugador {
           });
         this.objeto = new THREE.Mesh( geometry, material)
         scene.add(this.objeto)
+
+        this.objeto.position.x = x + 1/2;
+        this.objeto.position.y = y + 1/2;
 
         this.objeto.rotation.x += Math.PI/2;
     }
