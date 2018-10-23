@@ -101,6 +101,12 @@ function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
     	}
     }
 
+    // Fill empty with grass
+    for (var i = 0; i < HEIGHT; i ++) {
+      for (var j = 0; j < WIDTH; j ++ ) 
+        if (m[i][j] == EMPTY) m[i][j] = GRASS;
+    }    
+
     return m;
 }
 
