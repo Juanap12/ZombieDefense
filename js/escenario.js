@@ -12,6 +12,9 @@ var STREET = 2;
 var HOUSE  = 3;
 var BUILDING = 4;
 
+var street_texture = (new THREE.TextureLoader()).load('textures/street.png');
+var grass_texture = (new THREE.TextureLoader()).load('textures/grass.jpg')
+
 function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
 	
 
@@ -105,10 +108,10 @@ function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
 }
 
 function imprimirMatriz(m) {
-    for (var i = 0; i < m.length; i ++) console.log(m[i]);
+    for (var i = 0; i < m.length; i ++){
+        console.log(m[i]);
+    }
 }
-
-var street_texture = (new THREE.TextureLoader()).load('/textures/street.png');
 
 function crearEscenario() {
 
@@ -137,7 +140,7 @@ function crearEscenario() {
         objects_constructor[objects_ids[i]] = constructors[i];
 
     var matrix = generarMatrizEscenario(WIDTH,HEIGHT,objects);
-    //imprimirMatriz(matrix)
+    imprimirMatriz(matrix)
     var x0 = -Math.floor(WIDTH/2);
     var y0 = -Math.floor(HEIGHT/2);
 
@@ -156,7 +159,7 @@ function crearEscenario() {
                 scene.add( plane );
                 break;
             case GRASS:
-                material = new THREE.MeshBasicMaterial( {color:0x00ff00, side: THREE.DoubleSide} );
+                material = new THREE.MeshBasicMaterial( {map: grass_texture, side: THREE.DoubleSide} );
                 plane = new THREE.Mesh( geometry, material );
                 plane.position.x = i + x0;
                 plane.position.y = j + y0;

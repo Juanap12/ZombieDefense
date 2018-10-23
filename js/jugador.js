@@ -5,7 +5,7 @@ class Jugador {
         let radioSuperior = 1
         let radioInferior = 1
         let altura = 1
-        let segmentosRadiales = 30
+        let segmentosRadiales = 60
 
         let geometry = new THREE.CylinderGeometry( radioSuperior, radioInferior, altura, segmentosRadiales)
         let texture = loader.load("textures/jugador.png")
