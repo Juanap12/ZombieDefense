@@ -18,6 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/97/three.min.js"></script>
     <script src="js/bala.js"></script>
     <script src="js/jugador.js"></script>
+    <script src="js/zombie.js"></script>
     <script src="js/edificio.js"></script>
     <script src="js/casa.js"></script>
     <script src="js/escenario.js"></script>
@@ -44,6 +45,8 @@
         edificios = []
         casas = []
 
+        let zombie1 = new Zombie(2,10)
+
         crearEscenario()
 
         for(let jugador of jugadores){
@@ -56,6 +59,8 @@
 
         var render = function () {
             requestAnimationFrame(render);
+
+            zombie1.actualizar()
 
             for(let jugador of jugadores){
                 jugador.actualizar()
