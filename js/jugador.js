@@ -1,10 +1,11 @@
 class Jugador {
     constructor(x, y) {
-        console.log(x+""+y)
+        console.log(x+""+y);
         this.balas = []
-
-        this.width = 2
-        this.height = 2
+        let width = 2
+        let height = 2
+        this.width = width;
+        this.height = height;
 
         let radioSuperior = width/2
         let radioInferior = width/2

@@ -31,7 +31,6 @@ function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
     
     
     // Player 1
-    let jugador1_x 
     m[midRow + 1][0] = 5;
     m[midRow + 2][0] = 5;
     m[midRow + 1][1] = 5;
@@ -153,12 +152,7 @@ function crearEscenario() {
             'height' : 2,
             'frequency' : 3,
             'id' : BUILDING,
-        }/*,{
-            'width': 2,
-            'height': 2,
-            //'frequency': 0,
-            'id': PLAYER,
-        }*/
+        }
     ];
 
     var objects_ids = [HOUSE,BUILDING,PLAYER];
@@ -204,6 +198,13 @@ function crearEscenario() {
 
                 if(matrix[j][i] == PLAYER){
                     jugadores.push(obj)
+                    material = new THREE.MeshBasicMaterial( {map: grass_texture, side: THREE.DoubleSide} );
+                
+                    plane = new THREE.Mesh( geometry, material );
+                    plane.position.x = i + x0;
+                    plane.position.y = j + y0;
+                    scene.add( plane );
+
                 }
 
                 var w = obj.width;
@@ -211,7 +212,7 @@ function crearEscenario() {
                 for (let k = 0; k < w*h; k++) { 
                     var j_ = Math.floor(k/w) + j;
                     var i_ = k%w + i;
-                    matrix[j_][i_] = EMPTY;
+                    matrix[j_][i_] = GRASS;
                 }
         }
     }
