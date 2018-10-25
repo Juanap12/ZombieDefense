@@ -28,12 +28,21 @@ function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
     }
 
     let midRow = Math.floor(HEIGHT/2);
-
+    
+    
     // Player 1
+    let jugador1_x 
     m[midRow + 1][0] = 5;
+    m[midRow + 2][0] = 5;
+    m[midRow + 1][1] = 5;
+    m[midRow + 2][1] = 5;
 
     // Player 2
     m[midRow - 1][0] = 5;
+    m[midRow - 2][0] = 5;
+    m[midRow - 1][1] = 5;
+    m[midRow - 2][1] = 5;
+    
 
     // MAIN STREET
     for (var i = 0; i < WIDTH; i++) {
@@ -43,7 +52,7 @@ function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
 
     // UPPER STREETS
     var STREETS_PER_SIDE = 2;
-    for (var i = 2; i < (WIDTH - 2); i++) {
+    for (var i = 4; i < (WIDTH - 2); i++) {
       var build = ( (Math.random()*WIDTH)<STREETS_PER_SIDE );
       if (build) {
         for (var j = 0; m[j][i] != STREET; j++) {
@@ -54,7 +63,7 @@ function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
     }
 
     // LOW STREETS
-    for (var i = 2; i < (WIDTH - 2); i++) {
+    for (var i = 4; i < (WIDTH - 2); i++) {
       var build = ( (Math.random()*WIDTH)<STREETS_PER_SIDE );
       if (build) {
         for (var j = HEIGHT - 1; m[j][i] != STREET; j--) {
@@ -144,7 +153,12 @@ function crearEscenario() {
             'height' : 2,
             'frequency' : 3,
             'id' : BUILDING,
-        }
+        }/*,{
+            'width': 2,
+            'height': 2,
+            //'frequency': 0,
+            'id': PLAYER,
+        }*/
     ];
 
     var objects_ids = [HOUSE,BUILDING,PLAYER];
@@ -155,9 +169,11 @@ function crearEscenario() {
         objects_constructor[objects_ids[i]] = constructors[i];
 
     var matrix = generarMatrizEscenario(WIDTH,HEIGHT,objects);
-    imprimirMatriz(matrix)
+
     var x0 = -Math.floor(WIDTH/2);
     var y0 = -Math.floor(HEIGHT/2);
+
+    imprimirMatriz(matrix)
 
     for (var j = 0; j < HEIGHT; j++)
     for (var i = 0; i < WIDTH; i ++) {
@@ -187,12 +203,6 @@ function crearEscenario() {
                 var obj = new constructor(i + x0 - 0.5, j + y0 - 0.5);
 
                 if(matrix[j][i] == PLAYER){
-                    material = new THREE.MeshBasicMaterial( {map: grass_texture, side: THREE.DoubleSide} );
-                    plane = new THREE.Mesh( geometry, material );
-                    plane.position.x = i + x0;
-                    plane.position.y = j + y0;
-                    scene.add( plane );
-
                     jugadores.push(obj)
                 }
 
@@ -205,5 +215,7 @@ function crearEscenario() {
                 }
         }
     }
+
+    imprimirMatriz(matrix)
 }
 

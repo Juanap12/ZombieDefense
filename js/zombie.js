@@ -1,13 +1,13 @@
 class Zombie {
     constructor( x, y) {
-        let width = 3
-        let height = 3
+        let width = 1
+        let height = 1
 
         let geometry = new THREE.PlaneGeometry( width, height)
         let texture = loader.load("textures/zombie.png")
-        let material = new THREE.MeshBasicMaterial({
+        let material = new THREE.MeshPhongMaterial({
             color: 0xaaaaaa,
-            //transparent: true,
+            transparent: true,
             map: texture
           });
 
@@ -16,13 +16,11 @@ class Zombie {
 
         this.objeto.position.x = x + width/2;
         this.objeto.position.y = y + height/2;
+        this.objeto.position.z = 2;
 
     }
 
     actualizar() {
-        this.objeto.rotation.x += 1;
-        this.objeto.rotation.y += 1;
-        this.objeto.rotation.z += 1;
     }
     
 }
