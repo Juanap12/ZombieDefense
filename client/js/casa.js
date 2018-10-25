@@ -6,7 +6,7 @@ class Casa {
         this.width = width;
         this.height = height;
         let geometry = new THREE.BoxGeometry(width, height, depth)
-        let texture = loader.load("textures/techo_casa.png")
+        let texture = loader.load("client/textures/techo_casa.png")
         let material = new THREE.MeshPhongMaterial({
             color: 0xaaaaaa,
             specular: 0x333333,

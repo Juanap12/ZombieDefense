@@ -13,8 +13,8 @@ var HOUSE  = 3;
 var BUILDING = 4;
 var PLAYER = 5;
 
-var street_texture = (new THREE.TextureLoader()).load('textures/street.png');
-var grass_texture = (new THREE.TextureLoader()).load('textures/grass.jpg');
+var street_texture = (new THREE.TextureLoader()).load('client/textures/street.png');
+var grass_texture = (new THREE.TextureLoader()).load('client/textures/grass.jpg');
 
 function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
 	
