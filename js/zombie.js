@@ -10,6 +10,7 @@ class Zombie {
             //transparent: true,
             map: texture
           });
+
         this.objeto = new THREE.Mesh( geometry, material)
         scene.add(this.objeto)
 

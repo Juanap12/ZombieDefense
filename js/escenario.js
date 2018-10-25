@@ -137,7 +137,7 @@ function crearEscenario() {
         {
             'width': 1,
             'height' : 1,
-            'frequency' : 6,
+            'frequency' : 12,
             'id' : HOUSE,
         },{
             'width': 3,
