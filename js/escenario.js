@@ -130,8 +130,8 @@ function imprimirMatriz(m) {
 
 function crearEscenario() {
 
-    var WIDTH = 31;
-    var HEIGHT = 15;
+    var WIDTH = 21;
+    var HEIGHT = 13;
 
     var objects = [
         {
