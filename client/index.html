@@ -50,8 +50,8 @@
             camera.top = height / dividedBy
             camera.bottom = height / -dividedBy
             camera.updateProjectionMatrix()
-            console.info(dividedBy);
-            console.info(delta);
+            //console.info(dividedBy);
+            //console.info(delta);
         });
 
         var light = new THREE.AmbientLight(0xb4e7f2);
@@ -61,12 +61,11 @@
         edificios = []
         casas = []
 
+        zombies = []
 
         var matriz = crearEscenario();
 
         var generadorRutas = new GeneradorRutas(matriz);
-        let zombie1 = new Zombie( generadorRutas.generarRutaZombie() )
-        //let zombie1 = new Zombie( [[0,0]] )
 
         var socket = io();
 
@@ -91,18 +90,27 @@
             })
         }
 
-
+        let contador = 0;
 
         var render = function () {
             requestAnimationFrame(render);
 
-            zombie1.actualizar()
+            if( contador % 100 == 0){
+                zombies.push( new Zombie(generadorRutas.generarRutaZombie()) );
+            }
+            
+
+            for(let zombie of zombies) {
+                zombie.actualizar();
+            }
 
             for (let jugador of jugadores) {
                 jugador.actualizar()
             }
 
             renderer.render(scene, camera);
+            
+            contador++;
         };
         render();
     </script>
