@@ -20,6 +20,8 @@ class Zombie {
         let width = 1
         let height = 1
 
+        this.radius = width*0.8;
+
         let geometry = new THREE.PlaneGeometry( width, height)
         let texture = loader.load("client/textures/zombie.png")
         let material = new THREE.MeshPhongMaterial({
@@ -92,6 +94,13 @@ class Zombie {
 
     termino() {
         this.finished = true;
+    }
+
+    colision(x,y) {
+        if ( Math.sqrt( (x - this.objeto.position.x )**2 + (y - this.objeto.position.y )**2 ) < this.radius ) {
+            return true;
+        }
+        return false;
     }
     
 }

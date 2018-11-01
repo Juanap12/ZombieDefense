@@ -43,13 +43,13 @@ class GeneradorRutas {
 			path.push(initial_position);
 	 	}
 	 	else if (i <= this.upper_streets.length ) {
-	 		var initial_position = this.upper_streets[i - 1];
+	 		var initial_position = this.upper_streets[i - 1].slice();
 			initial_position[0] += Math.random()*padding - padding/2
 	 		path.push(initial_position);
 	 		path.push([initial_position[0], Math.random()*padding - padding/2]);
 	 	}
 	 	else {
-	 		var initial_position = this.lower_streets[i - 1 - this.upper_streets.length];
+	 		var initial_position = this.lower_streets[i - 1 - this.upper_streets.length].slice();
 			initial_position[0] += Math.random()*padding - padding/2;
 	 		path.push(initial_position);
 	 		path.push([initial_position[0], Math.random()*padding - padding/2]);
