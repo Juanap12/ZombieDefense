@@ -86,16 +86,9 @@ function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
                             empty = false
                             break
                         }
-                        
-                        if(l-1 >= 0 && f-1 >= 0){
-                            if(m[l-1][f] != EMPTY || m[l][f-1] != EMPTY || m[l-1][f-1] != EMPTY){
-                                empty = false
-                                break
-                            }
-                        }
     				}
     				if (empty) {
-    					empty_spots.push( [i,j] );
+    					empty_spots.push( [i + 1,j + 1] );
     				}
     			}
     		}
@@ -116,7 +109,7 @@ function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
         obj._count -= 1;
 
 
-    	var empty_spots = checkEmptySpots(m,obj.width,obj.height);
+    	var empty_spots = checkEmptySpots(m,obj.width + 2,obj.height + 2);
     	
     	var index = Math.floor(Math.random()*empty_spots.length);
     	var position = empty_spots[index];
