@@ -73,22 +73,23 @@ function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
     }
 
 
-    function checkEmptySpots(m,w,h) {
+    function checkEmptySpots(matrix,objectWidth,objectHeight) {
     	let empty_spots = [];
     	for (var i = 0; i < HEIGHT; i ++) {
     		for (var j = 0; j < WIDTH; j ++) {
-    			if (m[i][j] == EMPTY) {
+    			if (matrix[i][j] == EMPTY) {
     				let empty = true;
-    				for (let k = 0; k < w*h; k++) { 
-    					var l = Math.floor(k/w) + i;
-    					var f = k%w + j;
-    					if (f >= WIDTH || l >= HEIGHT || m[l][f] != EMPTY ) {
+    				for (let k = 0; k < objectWidth*objectHeight; k++) { 
+    					var fila = Math.floor(k/objectWidth) + i;
+    					var columna = k%objectWidth + j;
+    					if (columna >= WIDTH || fila >= HEIGHT || matrix[fila][columna] != EMPTY ) {
                             empty = false
                             break
                         }
     				}
     				if (empty) {
-    					empty_spots.push( [i + 1,j + 1] );
+                        empty_spots.push( [i + 1,j + 1
+                        ] );
     				}
     			}
     		}
