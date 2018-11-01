@@ -148,10 +148,11 @@ function copiarMatriz(m) {
     return cm;
 }
 
+var WIDTH = 21;
+var HEIGHT = 13;
 function crearEscenario() {
 
-    var WIDTH = 21;
-    var HEIGHT = 13;
+   
 
     var objects = [
         {

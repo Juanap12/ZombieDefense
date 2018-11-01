@@ -95,13 +95,20 @@
         }
 
 
-
+        var dis_i = 0;
         var render = function () {
             requestAnimationFrame(render);
 
             zombie1.actualizar()
 
             for (let jugador of jugadores) {
+                dis_i ++;
+                if (dis_i % 5 == 0)
+                    jugador.disparar(0);
+                for (let bala of jugador.balas) {
+                    if (zombie1.colision(bala.cube.position.x,bala.cube.position.y)) console.log('collition');
+                }
+
                 jugador.actualizar()
             }
 

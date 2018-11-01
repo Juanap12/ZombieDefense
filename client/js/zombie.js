@@ -20,7 +20,7 @@ class Zombie {
         let width = 1
         let height = 1
 
-        this.radius = width*0.8;
+        this.radius = width*0.55;
 
         let geometry = new THREE.PlaneGeometry( width, height)
         let texture = loader.load("client/textures/zombie.png")
@@ -101,6 +101,10 @@ class Zombie {
             return true;
         }
         return false;
+    }
+
+    destruir() {
+        
     }
     
 }
