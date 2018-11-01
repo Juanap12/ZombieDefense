@@ -1,5 +1,10 @@
 class Zombie {
     constructor( ruta ) {
+
+        this.movimientoLateral = 0;
+        this.cambioMovimiento = 0.05;
+        this.aux_movimientoLateral = 1;
+
         this.LEFT = "LEFT";
         this.RIGHT = "RIGHT";
         this.UP = "UP";
@@ -90,6 +95,15 @@ class Zombie {
             this.objeto.position.y = this.origen[1];
             this.rotarADestino(this.origen,this.destino)
         }
+
+        if( this.movimientoLateral == 5 || this.movimientoLateral == -5){
+            this.cambioMovimiento = -this.cambioMovimiento;
+            this.aux_movimientoLateral = -this.aux_movimientoLateral;
+        }
+
+        this.objeto.rotation.z += this.cambioMovimiento;
+
+        this.movimientoLateral += this.aux_movimientoLateral;
     }
 
     termino() {
