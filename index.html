@@ -22,6 +22,7 @@
     <script src="js/edificio.js"></script>
     <script src="js/casa.js"></script>
     <script src="js/escenario.js"></script>
+    <script src="js/rutas.js"></script>
     <script>
         var scene = new THREE.Scene();
         var aspect = window.innerWidth / window.innerHeight;
@@ -47,7 +48,9 @@
 
         let zombie1 = new Zombie(0,0)
 
-        crearEscenario()
+        var matriz = crearEscenario();
+
+        var generadorRutas = new GeneradorRutas(matriz);
 
         for(let jugador of jugadores){
             addEventListener("click", function(){

@@ -136,6 +136,17 @@ function imprimirMatriz(m) {
     }
 }
 
+function copiarMatriz(m) {
+    var cm = [];
+    for (var j = 0; j < m.length; j++) {
+        cm.push([]);
+        for (var i = 0; i < m[j].length; i++) {
+            cm[j].push(m[j][i]);
+        }
+    }
+    return cm;
+}
+
 function crearEscenario() {
 
     var WIDTH = 21;
@@ -163,6 +174,7 @@ function crearEscenario() {
         objects_constructor[objects_ids[i]] = constructors[i];
 
     var matrix = generarMatrizEscenario(WIDTH,HEIGHT,objects);
+    var cpy_matrix = copiarMatriz(matrix);
 
     var x0 = -Math.floor(WIDTH/2);
     var y0 = -Math.floor(HEIGHT/2);
@@ -218,5 +230,7 @@ function crearEscenario() {
     }
 
     imprimirMatriz(matrix)
+
+    return cpy_matrix
 }
 
