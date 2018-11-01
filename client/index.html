@@ -66,6 +66,9 @@
 
         var generadorRutas = new GeneradorRutas(matriz);
         let zombie1 = new Zombie( generadorRutas.generarRutaZombie() )
+        for (var i =0; i < 100; i++) {
+             new Zombie( generadorRutas.generarRutaZombie() )
+        }
         //let zombie1 = new Zombie( [[0,0]] )
 
         var socket = io();
