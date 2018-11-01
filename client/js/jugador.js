@@ -13,7 +13,7 @@ class Jugador {
         let segmentosRadiales = 60
 
         let geometry = new THREE.CylinderGeometry( radioSuperior, radioInferior, altura, segmentosRadiales)
-        let texture = loader.load("textures/jugador.png")
+        let texture = loader.load("client/textures/jugador.png")
         let material = new THREE.MeshPhongMaterial({
             color: 0xaaaaaa,
             specular: 0x333333,
@@ -36,11 +36,24 @@ class Jugador {
         }
     }
 
-    disparar() {
-        let angulo = Math.floor(Math.random() * 2*Math.PI)
-        let bala = new Bala(angulo,this.objeto.position)
-        
+    disparar(theta) {
+        //let angulo = Math.floor(Math.random() * 2*Math.PI)
+        //let angulo = Math.floor(theta * 2 * Math.PI)
+        let bala = new Bala(theta,this.objeto.position)
+
         this.balas.push(bala)
+    }
+
+    setPosY(data) {
+      this.objeto.rotation.y = -Math.PI/2 + (data/600*Math.PI/2);
+    }
+
+    setPosY2(data) {
+      this.objeto.rotation.y = Math.PI/2 + (data/600*Math.PI/2);
+    }
+
+    getPosY(){
+      return this.objeto.rotation.y;
     }
     
 }

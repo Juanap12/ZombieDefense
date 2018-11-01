@@ -13,8 +13,8 @@ var HOUSE  = 3;
 var BUILDING = 4;
 var PLAYER = 5;
 
-var street_texture = (new THREE.TextureLoader()).load('textures/street.png');
-var grass_texture = (new THREE.TextureLoader()).load('textures/grass.jpg');
+var street_texture = (new THREE.TextureLoader()).load('client/textures/street.png');
+var grass_texture = (new THREE.TextureLoader()).load('client/textures/grass.jpg');
 
 function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
 	
@@ -75,17 +75,24 @@ function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
 
     function checkEmptySpots(m,w,h) {
     	let empty_spots = [];
-    	for (var i =0; i < HEIGHT; i ++) {
+    	for (var i = 0; i < HEIGHT; i ++) {
     		for (var j = 0; j < WIDTH; j ++) {
     			if (m[i][j] == EMPTY) {
     				let empty = true;
     				for (let k = 0; k < w*h; k++) { 
     					var l = Math.floor(k/w) + i;
     					var f = k%w + j;
-    					if (f >= WIDTH || l >= HEIGHT || m[l][f] != EMPTY) {
-    						empty = false
-    						break;
-    					}
+    					if (f >= WIDTH || l >= HEIGHT || m[l][f] != EMPTY ) {
+                            empty = false
+                            break
+                        }
+                        
+                        if(l-1 >= 0 && f-1 >= 0){
+                            if(m[l-1][f] != EMPTY || m[l][f-1] != EMPTY || m[l-1][f-1] != EMPTY){
+                                empty = false
+                                break
+                            }
+                        }
     				}
     				if (empty) {
     					empty_spots.push( [i,j] );
@@ -156,7 +163,7 @@ function crearEscenario() {
         {
             'width': 1,
             'height' : 1,
-            'frequency' : 12,
+            'frequency' : 6,
             'id' : HOUSE,
         },{
             'width': 3,

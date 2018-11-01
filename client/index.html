@@ -16,12 +16,13 @@
 
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/97/three.min.js"></script>
-    <script src="js/bala.js"></script>
-    <script src="js/jugador.js"></script>
-    <script src="js/zombie.js"></script>
-    <script src="js/edificio.js"></script>
-    <script src="js/casa.js"></script>
-    <script src="js/escenario.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="client/js/bala.js"></script>
+    <script src="client/js/jugador.js"></script>
+    <script src="client/js/zombie.js"></script>
+    <script src="client/js/edificio.js"></script>
+    <script src="client/js/casa.js"></script>
+    <script src="client/js/escenario.js"></script>
     <script src="js/rutas.js"></script>
     <script>
         var scene = new THREE.Scene();
@@ -52,10 +53,27 @@
 
         var generadorRutas = new GeneradorRutas(matriz);
 
+        var socket = io();
+
         for(let jugador of jugadores){
-            addEventListener("click", function(){
-                jugador.disparar()
-            })
+          socket.on('serverMsg', function(data){
+            if(data.msg == "on"){
+              console.log("shot!");
+              jugador.disparar(jugador.getPosY());
+            }
+            else{
+              console.log(data);
+              var cont = 0;
+              for(let jugador of jugadores){
+                if(cont == 0){
+                  jugador.setPosY(data.msg);
+                  cont++;
+                }
+                else
+                  jugador.setPosY2(-data.msg);
+              }
+            }
+          })
         }
 
         

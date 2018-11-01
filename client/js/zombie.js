@@ -4,7 +4,7 @@ class Zombie {
         let height = 1
 
         let geometry = new THREE.PlaneGeometry( width, height)
-        let texture = loader.load("textures/zombie.png")
+        let texture = loader.load("client/textures/zombie.png")
         let material = new THREE.MeshPhongMaterial({
             color: 0xaaaaaa,
             transparent: true,
