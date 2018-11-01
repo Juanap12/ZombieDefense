@@ -24,7 +24,7 @@ class GeneradorRutas {
 			}
 		}
 
-		this.generarRutaZombie();
+		//this.generarRutaZombie();
 	}
 
 
@@ -58,8 +58,8 @@ class GeneradorRutas {
 	 	var last_point = path[path.length - 1];
 	 	path.push([ -this.w/2,last_point[1] ])
 
-	 	for (var i = 0; i < path.length; i++) this.probar(path[i],0x00FF00);
-		
+	 	//for (var i = 0; i < path.length; i++) this.probar(path[i],0x00FF00);
+		return path;
 	}
 
 

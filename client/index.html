@@ -47,11 +47,12 @@
         edificios = []
         casas = []
 
-        let zombie1 = new Zombie(0,0)
 
         var matriz = crearEscenario();
 
         var generadorRutas = new GeneradorRutas(matriz);
+        let zombie1 = new Zombie( generadorRutas.generarRutaZombie() )
+        //let zombie1 = new Zombie( [[0,0]] )
 
         var socket = io();
 
