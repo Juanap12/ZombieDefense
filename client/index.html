@@ -50,8 +50,8 @@
             camera.top = height / dividedBy
             camera.bottom = height / -dividedBy
             camera.updateProjectionMatrix()
-            console.info(dividedBy);
-            console.info(delta);
+            //console.info(dividedBy);
+            //console.info(delta);
         });
 
         var light = new THREE.AmbientLight(0xb4e7f2);
@@ -61,15 +61,11 @@
         edificios = []
         casas = []
 
+        zombies = []
 
         var matriz = crearEscenario();
 
         var generadorRutas = new GeneradorRutas(matriz);
-        let zombie1 = new Zombie( generadorRutas.generarRutaZombie() )
-        for (var i =0; i < 100; i++) {
-             new Zombie( generadorRutas.generarRutaZombie() )
-        }
-        //let zombie1 = new Zombie( [[0,0]] )
 
         var socket = io();
 
@@ -95,26 +91,59 @@
         }
 
 
-        var dis_i = 0;
+        let contador = 0;
+
+        function limpiar() {
+            for (let jugador of jugadores) {
+                let balas = [];
+                for (let bala of jugador.balas) {
+                    if ( !bala.to_destroy ) balas.push(bala);
+                }
+                jugador.balas = balas;
+            }
+
+            let clean_zombies = [];
+            for(let zombie of zombies) {
+                if (!zombie.to_destroy) clean_zombies.push(zombie);
+            }
+            zombies = clean_zombies;
+        }
+
         var render = function () {
             requestAnimationFrame(render);
 
-            zombie1.actualizar()
+            if( contador % 100 == 0){
+                zombies.push( new Zombie(generadorRutas.generarRutaZombie()) );
+                jugadores[0].disparar(0);
+            }
+            
 
+            for(let zombie of zombies) {
+                zombie.actualizar();
+            }
+
+
+            // Buscar collisiones de balas
             for (let jugador of jugadores) {
-                dis_i ++;
-                if (dis_i % 5 == 0)
-                    jugador.disparar(0);
                 for (let bala of jugador.balas) {
-                    if (zombie1.colision(bala.cube.position.x,bala.cube.position.y)) console.log('collition');
+                    for (let zombie of zombies) {
+                        if (zombie.colision(bala.cube.position.x,bala.cube.position.y)) zombie.destruir();  
+                    }
+                    
                 }
 
                 jugador.actualizar()
             }
 
+            limpiar();
+
             renderer.render(scene, camera);
+            
+            contador++;
         };
         render();
+
+
     </script>
 </body>
 
