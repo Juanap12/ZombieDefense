@@ -3,8 +3,17 @@ class Bala {
         this.angulo = angulo;
         this.velocidad = 0.1;
 
-        let geometry = new THREE.BoxGeometry( 0.1, 0.1, 0.1);
-        let material = new THREE.MeshNormalMaterial();
+        let width = 0.3;
+        let height = 0.2;
+        let depth = 0.1;
+
+        let geometry = new THREE.BoxGeometry(width, height, depth);
+        let texture = loader.load("client/textures/blast.png")
+        let material = new THREE.MeshPhongMaterial({
+            color: 0xaaaaaa,
+            transparent: true,
+            map: texture
+          });
         this.cube = new THREE.Mesh( geometry, material);
         scene.add(this.cube);
 
