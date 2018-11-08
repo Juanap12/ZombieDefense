@@ -12,7 +12,7 @@ class Zombie {
 
         this.finished = false;
 
-        this.speed = 0.01;
+        this.speed = 0.005 + Math.random()*0.01;
         this.ruta = ruta.reverse();
 
         this.origen = this.ruta.pop();
@@ -20,7 +20,7 @@ class Zombie {
 
         this.to_destroy = false;
 
-        console.log(ruta)
+
         let x = this.origen[0];
         let y = this.origen[1];
 
@@ -45,8 +45,6 @@ class Zombie {
         this.objeto.position.z = 2;
 
         
-        console.log(this.origen)
-        console.log(this.destino)
         // ROTATION
         this.rotarADestino(this.origen,this.destino);
 
@@ -113,6 +111,7 @@ class Zombie {
     }
 
     colision(x,y) {
+        //console.log(Math.sqrt( (x - this.objeto.position.x )**2 + (y - this.objeto.position.y )**2 ));
         if ( Math.sqrt( (x - this.objeto.position.x )**2 + (y - this.objeto.position.y )**2 ) < this.radius ) {
             return true;
         }

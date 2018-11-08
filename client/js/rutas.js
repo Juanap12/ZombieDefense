@@ -36,7 +36,6 @@ class GeneradorRutas {
 		var path = [];
 		let padding = STREET_WIDTH - ZOMBIE_WIDTH;
 
-		console.log(i);
 		if (i == 0) {
 			var initial_position = this.main_street.slice();
 			initial_position[1] += Math.random()*padding - padding/2

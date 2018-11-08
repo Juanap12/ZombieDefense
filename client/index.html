@@ -10,11 +10,33 @@
             padding: 0;
             overflow: hidden;
         }
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+        #finish {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            display: none;
+
+        }
+        #finish h1 {
+            position: relative;
+            font-size: 100px;
+            top: 50%;
+            margin: 0;
+            transform: translateY(-50%);
+        }
     </style>
     <meta charset="UTF-8">
 </head>
 
 <body>
+    <div id='finish'>
+        <h1>MUERTE</h1>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/97/three.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="client/js/bala.js"></script>
@@ -112,10 +134,13 @@
         var render = function () {
             requestAnimationFrame(render);
 
-            if( contador % 100 == 0){
+            if( contador % 75 == 0 ){
                 zombies.push( new Zombie(generadorRutas.generarRutaZombie()) );
-                jugadores[0].disparar(0);
             }
+            if (contador % 100 == 0) {
+                jugadores[0].disparar(Math.random()*Math.PI - Math.PI/2);
+            }
+
             
 
             for(let zombie of zombies) {
@@ -127,12 +152,34 @@
             for (let jugador of jugadores) {
                 for (let bala of jugador.balas) {
                     for (let zombie of zombies) {
-                        if (zombie.colision(bala.cube.position.x,bala.cube.position.y)) zombie.destruir();  
+                        if (zombie.colision(bala.cube.position.x,bala.cube.position.y)) {
+                            console.log(bala);
+                            zombie.destruir();
+                            bala.destruir();  
+                        }
                     }
                     
                 }
 
                 jugador.actualizar()
+            }
+
+            for (let zombie of zombies) {
+                if (zombie.finished == true) {
+                    var el  = document.getElementById('finish');
+                    el.style.display = 'block';
+
+                    console.log('TERMINO')
+                    cancelAnimationFrame(this.id);// Stop the animation
+                    this.renderer.domElement.addEventListener('dblclick', null, false); //remove listener to render
+                    this.scene = null;
+                    this.projector = null;
+                    this.camera = null;
+                    this.controls = null;
+                    empty(this.modelContainer);
+
+
+                }
             }
 
             limpiar();

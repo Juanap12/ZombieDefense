@@ -10,6 +10,8 @@ class Bala {
 
         this.distancia = 0;
         this.posicion_inicial = posicion;
+        this.cube.position.x = this.posicion_inicial.x;
+        this.cube.position.y = this.posicion_inicial.y;
 
         this.to_destroy = false;
     }

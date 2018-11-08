@@ -114,6 +114,7 @@ function generarMatrizEscenario(WIDTH,HEIGHT,sceneObjs) {
     	
     	var index = Math.floor(Math.random()*empty_spots.length);
     	var position = empty_spots[index];
+        console.log(position)
 
     	for (let k = 0; k < obj.width*obj.height; k++) { 
     		var i = Math.floor(k/obj.width) + position[0];
