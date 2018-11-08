@@ -41,7 +41,7 @@ class Jugador {
         //let angulo = Math.floor(theta * 2 * Math.PI)
         let bala = new Bala(theta,this.objeto.position)
 
-        bala.cube.rotation.y = this.objeto.rotation.y
+        bala.cube.rotation.z = this.objeto.rotation.y
 
         this.balas.push(bala)
     }
