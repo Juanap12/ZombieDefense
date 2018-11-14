@@ -21,7 +21,7 @@ var five = require("johnny-five"),
   botton,
   potentiometer;
 
-let probarSinArduino = false;
+let probarSinArduino = true;
 
 if (!probarSinArduino) {
   board = new five.Board();
