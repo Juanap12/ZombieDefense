@@ -15,9 +15,7 @@ class Jugador {
         let geometry = new THREE.CylinderGeometry( radioSuperior, radioInferior, altura, segmentosRadiales)
         let texture = loader.load("client/textures/jugador.png")
         let material = new THREE.MeshPhongMaterial({
-            color: 0xaaaaaa,
             specular: 0x333333,
-            shininess: 15,
             transparent: true,
             map: texture
           });
