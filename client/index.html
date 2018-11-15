@@ -10,10 +10,13 @@
             padding: 0;
             overflow: hidden;
         }
-        html, body {
+
+        html,
+        body {
             height: 100%;
             width: 100%;
         }
+
         #finish {
             position: relative;
             height: 100%;
@@ -21,6 +24,7 @@
             text-align: center;
             display: none;
         }
+
         #finish img {
             width: 50%;
             position: relative;
@@ -39,6 +43,7 @@
             background-color: #6FAE20;
             display: none;
         }
+
         #level-title {
             text-align: center;
             position: relative;
@@ -47,7 +52,7 @@
             margin: 0;
             transform: translateY(-50%);
             font-family: 'Gloria Hallelujah', cursive;
-        } 
+        }
     </style>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
@@ -78,7 +83,8 @@
         let height = window.innerHeight;
         let dividedBy = 130;
         //var camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
-        var camera = new THREE.OrthographicCamera(width / - dividedBy, width / dividedBy, height / dividedBy, height / - dividedBy, 1, 10000);
+        var camera = new THREE.OrthographicCamera(width / -dividedBy, width / dividedBy, height / dividedBy, height / -
+            dividedBy, 1, 10000);
         var renderer = new THREE.WebGLRenderer();
         var loader = new THREE.TextureLoader();
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -121,16 +127,14 @@
                 if (data.msg == "on") {
                     console.log("shot!");
                     jugador.disparar(jugador.getPosY());
-                }
-                else {
+                } else {
                     console.log(data);
                     var cont = 0;
                     for (let jugador of jugadores) {
                         if (cont == 0) {
                             jugador.setPosY(data.msg);
                             cont++;
-                        }
-                        else
+                        } else
                             jugador.setPosY2(-data.msg);
                     }
                 }
@@ -144,13 +148,13 @@
             for (let jugador of jugadores) {
                 let balas = [];
                 for (let bala of jugador.balas) {
-                    if ( !bala.to_destroy ) balas.push(bala);
+                    if (!bala.to_destroy) balas.push(bala);
                 }
                 jugador.balas = balas;
             }
 
             let clean_zombies = [];
-            for(let zombie of zombies) {
+            for (let zombie of zombies) {
                 if (!zombie.to_destroy) clean_zombies.push(zombie);
             }
             zombies = clean_zombies;
@@ -159,45 +163,58 @@
         var level = 1;
         var frequencia = 75;
         var total_zombies = 0;
+
         function siguiente_nivel() {
             console.log('siguiente');
 
-            var el  = document.getElementById('level');
+            var el = document.getElementById('level');
             el.style.display = 'block';
             var title = document.getElementById('level-title');
             title.innerHTML = `Nivel ${level}`;
 
             setTimeout(() => {
                 el.style.display = 'none';
-            },3000);
+            }, 3000);
 
 
-            total_zombies = 2 + Math.floor(level**3);
+            total_zombies = 2 + Math.floor(level ** 3);
             console.log(`total xombies ${total_zombies}`);
-            frequencia = 100 - level**3;
+            frequencia = 100 - level ** 3;
             if (frequencia < 1) frequencia = 1;
             console.log(frequencia);
-            level+=1;
+            level += 1;
         }
+
+        let clock = new THREE.Clock()
+
+        let startTime = clock.getElapsedTime();
+
         var render = function () {
             requestAnimationFrame(render);
 
-            if( contador % frequencia == 0 && total_zombies != 0 ){
-                console.log(total_zombies);
-                zombies.push( new Zombie(generadorRutas.generarRutaZombie()) );
-                total_zombies--;
+            //In seconds
+            let currentTime = clock.getElapsedTime() - startTime;
+
+            if (currentTime > 20) {
+
+                if (contador % frequencia == 0 && total_zombies != 0) {
+                    console.log(total_zombies);
+                    zombies.push(new Zombie(generadorRutas.generarRutaZombie()));
+                    total_zombies--;
+                }
+                if (total_zombies == 0 && zombies.length == 0) {
+                    siguiente_nivel();
+                }
             }
-            if (total_zombies == 0 && zombies.length == 0) {
-                siguiente_nivel();
-            }
+
 
             if (contador % 10 == 0) {
-                jugadores[0].disparar(Math.random()*Math.PI - Math.PI/2);
+                jugadores[0].disparar(Math.random() * Math.PI - Math.PI / 2);
             }
 
-            
 
-            for(let zombie of zombies) {
+
+            for (let zombie of zombies) {
                 zombie.actualizar();
             }
 
@@ -206,12 +223,12 @@
             for (let jugador of jugadores) {
                 for (let bala of jugador.balas) {
                     for (let zombie of zombies) {
-                        if (zombie.colision(bala.cube.position.x,bala.cube.position.y)) {
+                        if (zombie.colision(bala.cube.position.x, bala.cube.position.y)) {
                             zombie.destruir();
-                            bala.destruir();  
+                            bala.destruir();
                         }
                     }
-                    
+
                 }
 
                 jugador.actualizar()
@@ -219,12 +236,12 @@
 
             for (let zombie of zombies) {
                 if (zombie.finished == true) {
-                    var el  = document.getElementById('level');
+                    var el = document.getElementById('level');
                     el.style.display = 'block';
                     var title = document.getElementById('level-title');
                     title.innerHTML = `GAME OVER`;
 
-                    cancelAnimationFrame(this.id);// Stop the animation
+                    cancelAnimationFrame(this.id); // Stop the animation
                     this.renderer.domElement.addEventListener('dblclick', null, false); //remove listener to render
                     this.scene = null;
                     this.projector = null;
@@ -239,12 +256,11 @@
             limpiar();
 
             renderer.render(scene, camera);
-            
+
             contador++;
         };
+
         render();
-
-
     </script>
 </body>
 
