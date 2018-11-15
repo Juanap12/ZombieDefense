@@ -20,7 +20,6 @@
             width: 100%;
             text-align: center;
             display: none;
-
         }
         #finish img {
             width: 50%;
@@ -30,13 +29,37 @@
             margin: 0;
             transform: translateY(-50%);
         }
+
+        #level {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            color: #5B403E;
+            background-color: #6FAE20;
+            display: none;
+        }
+        #level-title {
+            text-align: center;
+            position: relative;
+            font-size: 200px;
+            top: 50%;
+            margin: 0;
+            transform: translateY(-50%);
+            font-family: 'Gloria Hallelujah', cursive;
+        } 
     </style>
     <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
 </head>
 
 <body>
     <div id='finish'>
         <img src="client/textures/game_over.png">
+    </div>
+
+    <div id='level'>
+        <h2 id='level-title'>NIVEL</h2>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/97/three.min.js"></script>
@@ -133,12 +156,24 @@
             zombies = clean_zombies;
         }
 
-        var level = 4;
+        var level = 1;
         var frequencia = 75;
         var total_zombies = 0;
         function siguiente_nivel() {
             console.log('siguiente');
+
+            var el  = document.getElementById('level');
+            el.style.display = 'block';
+            var title = document.getElementById('level-title');
+            title.innerHTML = `Nivel ${level}`;
+
+            setTimeout(() => {
+                el.style.display = 'none';
+            },3000);
+
+
             total_zombies = 2 + Math.floor(level**3);
+            console.log(`total xombies ${total_zombies}`);
             frequencia = 100 - level**3;
             if (frequencia < 1) frequencia = 1;
             console.log(frequencia);
@@ -184,10 +219,11 @@
 
             for (let zombie of zombies) {
                 if (zombie.finished == true) {
-                    var el  = document.getElementById('finish');
+                    var el  = document.getElementById('level');
                     el.style.display = 'block';
+                    var title = document.getElementById('level-title');
+                    title.innerHTML = `GAME OVER`;
 
-                    console.log('TERMINO')
                     cancelAnimationFrame(this.id);// Stop the animation
                     this.renderer.domElement.addEventListener('dblclick', null, false); //remove listener to render
                     this.scene = null;

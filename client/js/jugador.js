@@ -15,9 +15,7 @@ class Jugador {
         let geometry = new THREE.CylinderGeometry( radioSuperior, radioInferior, altura, segmentosRadiales)
         let texture = loader.load("client/textures/jugador.png")
         let material = new THREE.MeshPhongMaterial({
-            color: 0xaaaaaa,
             specular: 0x333333,
-            shininess: 15,
             transparent: true,
             map: texture
           });
@@ -40,6 +38,8 @@ class Jugador {
         //let angulo = Math.floor(Math.random() * 2*Math.PI)
         //let angulo = Math.floor(theta * 2 * Math.PI)
         let bala = new Bala(theta,this.objeto.position)
+
+        bala.cube.rotation.z = this.objeto.rotation.y
 
         this.balas.push(bala)
     }

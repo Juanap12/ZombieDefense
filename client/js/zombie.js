@@ -12,7 +12,7 @@ class Zombie {
 
         this.finished = false;
 
-        this.speed = 0.005 + Math.random()*0.01;
+        this.speed = 0.015 + Math.random()*0.01;
         this.ruta = ruta.reverse();
 
         this.origen = this.ruta.pop();
@@ -36,7 +36,7 @@ class Zombie {
             transparent: true,
             map: texture
           });
-
+          
         this.objeto = new THREE.Mesh( geometry, material)
         scene.add(this.objeto)
 

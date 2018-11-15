@@ -209,6 +209,8 @@ function crearEscenario() {
                 break;
             default:
                 var constructor = objects_constructor[matrix[j][i]];
+                //console.log(constructor);
+                //console.log(`i: ${i} j: ${j}`)
                 var obj = new constructor(i + x0 - 0.5, j + y0 - 0.5);
 
                 if(matrix[j][i] == PLAYER){
