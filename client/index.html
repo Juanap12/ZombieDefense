@@ -22,7 +22,8 @@
             display: none;
 
         }
-        #finish h1 {
+        #finish img {
+            width: 50%;
             position: relative;
             font-size: 100px;
             top: 50%;
@@ -35,8 +36,9 @@
 
 <body>
     <div id='finish'>
-        <h1>MUERTE</h1>
+        <img src="client/textures/game_over.png">
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/97/three.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="client/js/bala.js"></script>
@@ -131,13 +133,30 @@
             zombies = clean_zombies;
         }
 
+        var level = 4;
+        var frequencia = 75;
+        var total_zombies = 0;
+        function siguiente_nivel() {
+            console.log('siguiente');
+            total_zombies = 2 + Math.floor(level**3);
+            frequencia = 100 - level**3;
+            if (frequencia < 1) frequencia = 1;
+            console.log(frequencia);
+            level+=1;
+        }
         var render = function () {
             requestAnimationFrame(render);
 
-            if( contador % 75 == 0 ){
+            if( contador % frequencia == 0 && total_zombies != 0 ){
+                console.log(total_zombies);
                 zombies.push( new Zombie(generadorRutas.generarRutaZombie()) );
+                total_zombies--;
             }
-            if (contador % 100 == 0) {
+            if (total_zombies == 0 && zombies.length == 0) {
+                siguiente_nivel();
+            }
+
+            if (contador % 10 == 0) {
                 jugadores[0].disparar(Math.random()*Math.PI - Math.PI/2);
             }
 
@@ -153,7 +172,6 @@
                 for (let bala of jugador.balas) {
                     for (let zombie of zombies) {
                         if (zombie.colision(bala.cube.position.x,bala.cube.position.y)) {
-                            console.log(bala);
                             zombie.destruir();
                             bala.destruir();  
                         }

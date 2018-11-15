@@ -1,12 +1,17 @@
 class Edificio {
     constructor(x, y) {
+        let textures = [
+            "client/textures/techo_edificio.png",
+            "client/textures/techo_edificio1.png",
+        ]
         let width = 3
         let height = 2
         this.width = width;
         this.height = height;
         let depth = 1
         let geometry = new THREE.BoxGeometry(width, height, depth)
-        let texture = loader.load("client/textures/techo_edificio.png")
+        let texture_index = Math.floor(Math.random()*textures.length);
+        let texture = loader.load(textures[texture_index]);
         let material = new THREE.MeshPhongMaterial({
             color: 0xaaaaaa,
             specular: 0x333333,

@@ -1,5 +1,5 @@
 var STREET_WIDTH = 1;
-var ZOMBIE_WIDTH = 0.6;
+var ZOMBIE_WIDTH = 0.4;
 class GeneradorRutas {
 	constructor(m) {
 		this.m = m;
