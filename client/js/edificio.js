@@ -2,9 +2,9 @@ class Edificio {
     constructor(x, y) {
         //console.log(`x: ${x} y: ${y}`)
         let textures = [
-            //"client/textures/techo_edificio.png",
+            "client/textures/techo_edificio.png",
             "client/textures/techo_edificio_2.png",
-            "client/textures/techo_edificio1.png",
+            "client/textures/techo_edificio_3.png",
         ];
         let width = 3;
         let height = 2;

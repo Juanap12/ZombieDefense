@@ -3,9 +3,11 @@ class Casa {
         console.log("CASA")
         let textures = [
             "client/textures/techo_casa.png",
-            "client/textures/techo_casa1.png",
-            "client/textures/techo_casa2.png",
-            "client/textures/techo_casa3.png",
+            "client/textures/techo_casa_2.png",
+            "client/textures/techo_casa_3.png",
+            "client/textures/techo_casa_4.png",
+            "client/textures/techo_casa_5.png",
+            "client/textures/techo_casa_6.png",
         ]; 
     let width = 1;
     let height = 1;
