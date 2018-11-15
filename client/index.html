@@ -1,72 +1,123 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Zombie Defense App</title>
     <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
 
-        html,
-        body {
-            height: 100%;
-            width: 100%;
-        }
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+      }
 
-        #finish {
-            position: relative;
-            height: 100%;
-            width: 100%;
-            text-align: center;
-            display: none;
-        }
+      #menu {
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        display: block;
+        background-image: url("client/images/menu_background.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
 
-        #finish img {
-            width: 50%;
-            position: relative;
-            font-size: 100px;
-            top: 50%;
-            margin: 0;
-            transform: translateY(-50%);
-        }
+      #finish {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        display: none;
+      }
 
-        #level {
-            position: relative;
-            height: 100%;
-            width: 100%;
-            text-align: center;
-            color: #5B403E;
-            background-color: #6FAE20;
-            display: none;
-        }
+      #finish img {
+        width: 50%;
+        position: relative;
+        font-size: 100px;
+        top: 50%;
+        margin: 0;
+        transform: translateY(-50%);
+      }
 
-        #level-title {
-            text-align: center;
-            position: relative;
-            font-size: 200px;
-            top: 50%;
-            margin: 0;
-            transform: translateY(-50%);
-            font-family: 'Gloria Hallelujah', cursive;
-        }
+      #level {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        color: #5b403e;
+        background-color: #6fae20;
+        display: none;
+      }
+
+      #level-title {
+        text-align: center;
+        position: relative;
+        font-size: 200px;
+        top: 50%;
+        margin: 0;
+        transform: translateY(-50%);
+        font-family: "Gloria Hallelujah", cursive;
+      }
+
+      #game-title {
+        text-align: center;
+        position: relative;
+        font-size: 80px;
+        margin: 0;
+        bottom: 0;
+        right: 0;
+        color: white;
+        font-family: "Gloria Hallelujah", cursive;
+      }
     </style>
-    <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
-</head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
-    <div id='finish'>
-        <img src="client/textures/game_over.png">
+  <body>
+    <div id="menu">
+      <h2 id="game-title">Zombie Defense</h2>
+      <button
+        type="button"
+        class="btn btn-primary btn-lg btn-block"
+        onclick="startGame()"
+      >
+        Start Game
+      </button>
     </div>
 
-    <div id='level'>
-        <h2 id='level-title'>NIVEL</h2>
-    </div>
+    <div id="level"><h2 id="level-title">NIVEL</h2></div>
 
+    <div id="finish"><img src="client/textures/game_over.png" /></div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/97/three.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="client/js/bala.js"></script>
@@ -77,44 +128,54 @@
     <script src="client/js/escenario.js"></script>
     <script src="client/js/rutas.js"></script>
     <script>
-        var scene = new THREE.Scene();
-        var aspect = window.innerWidth / window.innerHeight;
-        let width = window.innerWidth;
-        let height = window.innerHeight;
-        let dividedBy = 130;
+      var scene = new THREE.Scene();
+      var aspect = window.innerWidth / window.innerHeight;
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let dividedBy = 130;
+      var renderer = new THREE.WebGLRenderer();
+      var loader = new THREE.TextureLoader();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      function startGame() {
+        let menu = document.getElementById("menu");
+        menu.style.display = "none";
+
         //var camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
-        var camera = new THREE.OrthographicCamera(width / -dividedBy, width / dividedBy, height / dividedBy, height / -
-            dividedBy, 1, 10000);
-        var renderer = new THREE.WebGLRenderer();
-        var loader = new THREE.TextureLoader();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+        var camera = new THREE.OrthographicCamera(
+          width / -dividedBy,
+          width / dividedBy,
+          height / dividedBy,
+          height / -dividedBy,
+          1,
+          10000
+        );
 
         scene.add(camera);
-
 
         camera.position.z = 10;
 
         window.addEventListener("wheel", event => {
-            const delta = Math.sign(event.wheelDelta);
-            dividedBy += delta
-            camera.left = width / -dividedBy
-            camera.right = width / dividedBy
-            camera.top = height / dividedBy
-            camera.bottom = height / -dividedBy
-            camera.updateProjectionMatrix()
-            //console.info(dividedBy);
-            //console.info(delta);
+          const delta = Math.sign(event.wheelDelta);
+          dividedBy += delta;
+          camera.left = width / -dividedBy;
+          camera.right = width / dividedBy;
+          camera.top = height / dividedBy;
+          camera.bottom = height / -dividedBy;
+          camera.updateProjectionMatrix();
+          //console.info(dividedBy);
+          //console.info(delta);
         });
 
         var light = new THREE.AmbientLight(0xb4e7f2);
         scene.add(light);
 
-        jugadores = []
-        edificios = []
-        casas = []
+        jugadores = [];
+        edificios = [];
+        casas = [];
 
-        zombies = []
+        zombies = [];
 
         var matriz = crearEscenario();
 
@@ -123,41 +184,39 @@
         var socket = io();
 
         for (let jugador of jugadores) {
-            socket.on('serverMsg', function (data) {
-                if (data.msg == "on") {
-                    console.log("shot!");
-                    jugador.disparar(jugador.getPosY());
-                } else {
-                    console.log(data);
-                    var cont = 0;
-                    for (let jugador of jugadores) {
-                        if (cont == 0) {
-                            jugador.setPosY(data.msg);
-                            cont++;
-                        } else
-                            jugador.setPosY2(-data.msg);
-                    }
-                }
-            })
+          socket.on("serverMsg", function(data) {
+            if (data.msg == "on") {
+              console.log("shot!");
+              jugador.disparar(jugador.getPosY());
+            } else {
+              console.log(data);
+              var cont = 0;
+              for (let jugador of jugadores) {
+                if (cont == 0) {
+                  jugador.setPosY(data.msg);
+                  cont++;
+                } else jugador.setPosY2(-data.msg);
+              }
+            }
+          });
         }
-
 
         let contador = 0;
 
         function limpiar() {
-            for (let jugador of jugadores) {
-                let balas = [];
-                for (let bala of jugador.balas) {
-                    if (!bala.to_destroy) balas.push(bala);
-                }
-                jugador.balas = balas;
+          for (let jugador of jugadores) {
+            let balas = [];
+            for (let bala of jugador.balas) {
+              if (!bala.to_destroy) balas.push(bala);
             }
+            jugador.balas = balas;
+          }
 
-            let clean_zombies = [];
-            for (let zombie of zombies) {
-                if (!zombie.to_destroy) clean_zombies.push(zombie);
-            }
-            zombies = clean_zombies;
+          let clean_zombies = [];
+          for (let zombie of zombies) {
+            if (!zombie.to_destroy) clean_zombies.push(zombie);
+          }
+          zombies = clean_zombies;
         }
 
         var level = 1;
@@ -165,103 +224,100 @@
         var total_zombies = 0;
 
         function siguiente_nivel() {
-            console.log('siguiente');
+          console.log("siguiente");
 
-            var el = document.getElementById('level');
-            el.style.display = 'block';
-            var title = document.getElementById('level-title');
-            title.innerHTML = `Nivel ${level}`;
+          var el = document.getElementById("level");
+          el.style.display = "block";
+          var title = document.getElementById("level-title");
+          title.innerHTML = `Nivel ${level}`;
 
-            setTimeout(() => {
-                el.style.display = 'none';
-            }, 3000);
+          setTimeout(() => {
+            el.style.display = "none";
+          }, 3000);
 
-
-            total_zombies = 2 + Math.floor(level ** 3);
-            console.log(`total xombies ${total_zombies}`);
-            frequencia = 100 - level ** 3;
-            if (frequencia < 1) frequencia = 1;
-            console.log(frequencia);
-            level += 1;
+          total_zombies = 2 + Math.floor(level ** 3);
+          console.log(`total zombies ${total_zombies}`);
+          frequencia = 100 - level ** 3;
+          if (frequencia < 1) frequencia = 1;
+          console.log(frequencia);
+          level += 1;
         }
 
-        let clock = new THREE.Clock()
+        let clock = new THREE.Clock();
 
         let startTime = clock.getElapsedTime();
 
-        var render = function () {
-            requestAnimationFrame(render);
+        var render = function() {
+          requestAnimationFrame(render);
 
-            //In seconds
-            let currentTime = clock.getElapsedTime() - startTime;
+          //In seconds
+          let currentTime = clock.getElapsedTime() - startTime;
 
-            if (currentTime > 20) {
+          if (currentTime > 20) {
+            if (contador % frequencia == 0 && total_zombies != 0) {
+              console.log(total_zombies);
+              zombies.push(new Zombie(generadorRutas.generarRutaZombie()));
+              total_zombies--;
+            }
+            if (total_zombies == 0 && zombies.length == 0) {
+              siguiente_nivel();
+            }
+          }
 
-                if (contador % frequencia == 0 && total_zombies != 0) {
-                    console.log(total_zombies);
-                    zombies.push(new Zombie(generadorRutas.generarRutaZombie()));
-                    total_zombies--;
+          if (contador % 10 == 0) {
+            jugadores[0].disparar(Math.random() * Math.PI - Math.PI / 2);
+          }
+
+          for (let zombie of zombies) {
+            zombie.actualizar();
+          }
+
+          // Buscar collisiones de balas
+          for (let jugador of jugadores) {
+            for (let bala of jugador.balas) {
+              for (let zombie of zombies) {
+                if (
+                  zombie.colision(bala.cube.position.x, bala.cube.position.y)
+                ) {
+                  zombie.destruir();
+                  bala.destruir();
                 }
-                if (total_zombies == 0 && zombies.length == 0) {
-                    siguiente_nivel();
-                }
+              }
             }
 
+            jugador.actualizar();
+          }
 
-            if (contador % 10 == 0) {
-                jugadores[0].disparar(Math.random() * Math.PI - Math.PI / 2);
+          for (let zombie of zombies) {
+            if (zombie.finished == true) {
+              var el = document.getElementById("level");
+              el.style.display = "block";
+              var title = document.getElementById("level-title");
+              title.innerHTML = `GAME OVER`;
+
+              cancelAnimationFrame(this.id); // Stop the animation
+              this.renderer.domElement.addEventListener(
+                "dblclick",
+                null,
+                false
+              ); //remove listener to render
+              this.scene = null;
+              this.projector = null;
+              this.camera = null;
+              this.controls = null;
+              empty(this.modelContainer);
             }
+          }
 
+          limpiar();
 
+          renderer.render(scene, camera);
 
-            for (let zombie of zombies) {
-                zombie.actualizar();
-            }
-
-
-            // Buscar collisiones de balas
-            for (let jugador of jugadores) {
-                for (let bala of jugador.balas) {
-                    for (let zombie of zombies) {
-                        if (zombie.colision(bala.cube.position.x, bala.cube.position.y)) {
-                            zombie.destruir();
-                            bala.destruir();
-                        }
-                    }
-
-                }
-
-                jugador.actualizar()
-            }
-
-            for (let zombie of zombies) {
-                if (zombie.finished == true) {
-                    var el = document.getElementById('level');
-                    el.style.display = 'block';
-                    var title = document.getElementById('level-title');
-                    title.innerHTML = `GAME OVER`;
-
-                    cancelAnimationFrame(this.id); // Stop the animation
-                    this.renderer.domElement.addEventListener('dblclick', null, false); //remove listener to render
-                    this.scene = null;
-                    this.projector = null;
-                    this.camera = null;
-                    this.controls = null;
-                    empty(this.modelContainer);
-
-
-                }
-            }
-
-            limpiar();
-
-            renderer.render(scene, camera);
-
-            contador++;
+          contador++;
         };
 
         render();
+      }
     </script>
-</body>
-
+  </body>
 </html>
