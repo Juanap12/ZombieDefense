@@ -48,8 +48,8 @@
         height: 100%;
         width: 100%;
         text-align: center;
-        color: #5b403e;
-        background-color: #6fae20;
+        color: #6fae20;
+        background-color: #fdfcfc;
         display: none;
       }
 
@@ -60,7 +60,37 @@
         top: 50%;
         margin: 0;
         transform: translateY(-50%);
-        font-family: "Gloria Hallelujah", cursive;
+        font-family: "Freckle Face", cursive;
+      }
+
+      #end-game {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        color: #ffffff;
+        background-color: #000000;
+        display: none;
+      }
+
+      #end-game-title {
+        text-align: center;
+        position: relative;
+        font-size: 200px;
+        top: 50%;
+        margin: 0;
+        transform: translateY(-50%);
+        font-family: "Orbitron", sans-serif;
+      }
+
+      #end-game-subtitle {
+        text-align: center;
+        position: relative;
+        font-size: 70px;
+        top: 50%;
+        margin: 0;
+        transform: translateY(-80%);
+        font-family: "Orbitron", sans-serif;
       }
 
       #game-title {
@@ -72,6 +102,18 @@
         right: 0;
         color: white;
         font-family: "Gloria Hallelujah", cursive;
+      }
+
+      #counter {
+        position: absolute;
+        font-family: 'Press Start 2P', cursive;
+        font-size: 30px;
+        color: white;
+        top: 10px;
+        width: 100%;
+        text-align: center;
+        z-index: 100;
+        display: block;
       }
     </style>
     <meta charset="UTF-8" />
@@ -85,21 +127,45 @@
       href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css?family=Orbitron"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Freckle+Face"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
   </head>
 
   <body>
     <div id="menu">
       <h2 id="game-title">Zombie Defense</h2>
-      <button
-        type="button"
-        class="btn btn-primary btn-lg btn-block"
-        onclick="startGame()"
-      >
-        Start Game
-      </button>
+      <div class="fixed-bottom m-4">
+        <button
+          type="button"
+          class="btn btn-lg btn-block btn-info"
+          onclick="showTutorial()"
+        >
+          Tutorial
+        </button>
+        <button
+          type="button"
+          class="btn btn-lg btn-block btn-success"
+          onclick="startGame()"
+        >
+          Start Game
+        </button>
+      </div>
     </div>
 
+    <div id="counter"></div>
+
     <div id="level"><h2 id="level-title">NIVEL</h2></div>
+    <div id="end-game">
+      <h2 id="end-game-title">Game Over</h2>
+      <h3 id="end-game-subtitle">Reload the page to restart the game</h3>
+    </div>
 
     <div id="finish"><img src="client/textures/game_over.png" /></div>
 
@@ -137,6 +203,8 @@
       var loader = new THREE.TextureLoader();
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
+
+      function showTutorial() {}
 
       function startGame() {
         let menu = document.getElementById("menu");
@@ -246,6 +314,7 @@
         let clock = new THREE.Clock();
 
         let startTime = clock.getElapsedTime();
+        let timeToOrganize = 20;
 
         var render = function() {
           requestAnimationFrame(render);
@@ -253,7 +322,9 @@
           //In seconds
           let currentTime = clock.getElapsedTime() - startTime;
 
-          if (currentTime > 20) {
+          let counter = document.getElementById("counter");
+
+          if (currentTime > timeToOrganize) {
             if (contador % frequencia == 0 && total_zombies != 0) {
               console.log(total_zombies);
               zombies.push(new Zombie(generadorRutas.generarRutaZombie()));
@@ -262,10 +333,18 @@
             if (total_zombies == 0 && zombies.length == 0) {
               siguiente_nivel();
             }
+          } else {
+            let remainingTime = Math.floor(timeToOrganize - currentTime);
+
+            counter.innerHTML = `${remainingTime}`;
+
+            if(remainingTime == 0){
+              counter.style.display = "none";
+            }
           }
 
           if (contador % 10 == 0) {
-            jugadores[0].disparar(Math.random() * Math.PI - Math.PI / 2);
+            //jugadores[0].disparar(Math.random() * Math.PI - Math.PI / 2);
           }
 
           for (let zombie of zombies) {
@@ -290,9 +369,9 @@
 
           for (let zombie of zombies) {
             if (zombie.finished == true) {
-              var el = document.getElementById("level");
+              var el = document.getElementById("end-game");
               el.style.display = "block";
-              var title = document.getElementById("level-title");
+              var title = document.getElementById("end-game-title");
               title.innerHTML = `GAME OVER`;
 
               cancelAnimationFrame(this.id); // Stop the animation
