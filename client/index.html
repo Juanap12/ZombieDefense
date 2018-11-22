@@ -204,9 +204,22 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
 
+      var socket = io();
+
+      let gameStarted = false;
+
+      socket.on("serverMsg", function(data) {
+        if (data.msg == "on" && gameStarted == false) {
+          console.log("START GAME!");
+          startGame();
+        }
+      });
+
       function showTutorial() {}
 
       function startGame() {
+        gameStarted = true;
+
         let menu = document.getElementById("menu");
         menu.style.display = "none";
 
@@ -248,8 +261,6 @@
         var matriz = crearEscenario();
 
         var generadorRutas = new GeneradorRutas(matriz);
-
-        var socket = io();
 
         for (let jugador of jugadores) {
           socket.on("serverMsg", function(data) {
